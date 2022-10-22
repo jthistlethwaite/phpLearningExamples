@@ -70,9 +70,13 @@ for ($x = 0; $x < count($animals); $x++ ) {
 	$animal = $animals[$x];
 	$sound = $sounds[$x];
 
+    // Here were setting a way to know if the duck has been found, it will remain false until $animal is the duck.
+    $foundDuck = false;
+
     /*
      * Here we're making a new empty array called seenAnimals, then we're taking whatever animal we're on and appending
      * it to this array. This give us a list of what animals we've looped through.
+     * We could have also used array_push($seenAnimals, $animal)
      */
     $seenAnimals[] = $animal;
 
@@ -83,8 +87,8 @@ for ($x = 0; $x < count($animals); $x++ ) {
      * creating a complex variable for lyrics inside our for loop where animal and sound variable are nested and get
      * replaced each time the loop iterates.
      *
-     * I need more information about these and how they can be used, it seems that php treats this in a similar way to html
-     * treats <pre></pre> tags.
+     * I need more information about these and how they can be used, it seems that php treats this in a similar way that
+     * html treats <pre></pre> tags.
      */
     $lyrics = <<<END_LYRICS
 Old MACDONALD had a farm
@@ -111,12 +115,21 @@ END_LYRICS;
         echo "The cat ate the bird\n";
         break;
     }
+
+    if ($animal == 'duck') {
+        $foundDuck = true;
+    }
+
     /*
      * Note: because this echo statement is within our for loop, this will print the lyrics for each animal to our
      * terminal.
      */
 
 
+}
+
+if ($foundDuck == true){
+    echo "We found the duck!\n";
 }
 
 echo "So far we've seen:\n";

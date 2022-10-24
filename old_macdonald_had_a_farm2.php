@@ -27,16 +27,29 @@ function shuffle_ass(&$array){
     $aux = array();
     // This seems to be making a keys array based on the keys used in the original array.
     $keys = array_keys($array);
+    /*
+     * So now I think I have 3 different arrays; aux (which is empty), keys (which looks like 0 => "dog"), and the
+     * original array
+     */
+
     // Now that I have a simple keys array, this just shuffles it.
     shuffle($keys);
     // This is where I start getting lost, I see that I'm using the keys array to make a key variable.
     foreach($keys as $key) {
-        // Here I think I'm telling it that the keys in the new array should be the same keys from the old one.
+        /*
+         * I don't fully understand what exactly is happening here. It looks like the randomized keys are being set in
+         * the aux array and then being set equal to the key in the original. For example if we're on the cat,
+         * aux['cat] = array['cat'] and because the value of array['cat'] is "hiss", so to is the value of aux['cat'].
+         * This is now our shuffled results, stored in the aux array
+         */
         $aux[$key] = $array[$key];
-        // I really have no idea what's happening here at all.
+        // This is unsetting the memory for each key as we loop through them, ultimately destroying the original array.
         unset($array[$key]);
     }
-    // Here I think I'm just overwriting the new array over the old one.
+    /*
+     * Here I'm replacing the now destroyed original array, with our desired results stored in aux. This preserves the
+     * name of the original array
+     */
     $array = $aux;
 };
 
@@ -48,13 +61,11 @@ shuffle_ass($animalsAndSounds);
  * animals array. It's important for this to be outside the foreach loop because we don't want to keep resetting it to 0
  */
 $x = 0;
-/*
- * This will stay set to 0 until we come across a duck, at which point it will set to whatever the value of x is at the
- * time. This is how we'll keep track of when the duck shows up.
- */
-$y = 0;
+
 
 // This lets us know if we've found the duck yet, since we haven't started the loop we'll leave the default as false.
+// In theory, this variable doesn't need to be set until we're looping through the duck, but the IDE complains about it
+// not being defined if I don't
 $foundDuck = false;
 
 foreach ($animalsAndSounds as $animal => $sound) {

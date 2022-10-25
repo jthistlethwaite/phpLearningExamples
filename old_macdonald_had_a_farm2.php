@@ -48,7 +48,7 @@ function shuffle_ass(&$array){
     }
     /*
      * Here I'm replacing the now destroyed original array, with our desired results stored in aux. This preserves the
-     * name of the original array
+     * name of the original array. This is actually done by renaming the aux array to be whatever the original name was.
      */
     $array = $aux;
 };
@@ -62,10 +62,11 @@ shuffle_ass($animalsAndSounds);
  */
 $x = 0;
 
-
-// This lets us know if we've found the duck yet, since we haven't started the loop we'll leave the default as false.
-// In theory, this variable doesn't need to be set until we're looping through the duck, but the IDE complains about it
-// not being defined if I don't
+/*
+ * This lets us know if we've found the duck yet, since we haven't started the loop we'll leave the default as false.
+ * In theory, this variable doesn't need to be set until we're looping through the duck, but the IDE complains about it
+ * not being defined if I don't
+ */
 $foundDuck = false;
 
 foreach ($animalsAndSounds as $animal => $sound) {
@@ -116,3 +117,5 @@ if ($foundDuck){
 
 echo "\nSo far we've seen:\n";
 print_r($seenAnimals);
+
+

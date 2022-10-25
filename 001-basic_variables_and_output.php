@@ -5,7 +5,7 @@
 
 /*
 	This is also a comment, and is used for making comments
-	that are more like a parapgraph
+	that are more like a paragraph
 */
 
 // Variables hold data. Here we make a variable called $a

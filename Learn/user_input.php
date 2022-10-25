@@ -16,6 +16,16 @@ class weapon
     }
 
 }
+//
+//class Glock extends weapon
+//{
+//    public $platform = "G43";
+//    public $datafields = ["platform", "chamber", "serial", "variant"];
+//}
+//$g = new Glock();
+//$g->weaponInfo();
+//print_r($g);
+//exit;
 
 class arsenal
 {
@@ -40,11 +50,31 @@ class arsenal
             }
         }
     }
+
+    public function save_arsenal()
+    {
+        echo "Where do you want to save?\n";
+        $destination = readline();
+
+        $saveData = serialize($this);
+        file_put_contents($destination, $saveData);
+
+        //if(is_file($destination)){
+
+       // }
+    }
+
+    public static function load_arsenal()
+    {
+        $file_location = readline();
+        $c = file_get_contents($file_location);
+        return unserialize($c);
+    }
 }
-
-
-$myGuns = new arsenal();
-$myGuns->build();
-
-
-print_r($myGuns);
+//
+//
+//$myGuns = new arsenal();
+//$myGuns->build();
+//
+//
+//print_r($myGuns);

@@ -6,6 +6,6 @@ require_once __DIR__. "/making_classes.php";
 //$a->build();
 //$a->save_arsenal();
 
-$a = arsenal::loadArsenal();
+$a = arsenal::loadFromFile();
 
 print_r($a);

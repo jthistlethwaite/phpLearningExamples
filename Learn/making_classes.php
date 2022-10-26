@@ -20,7 +20,7 @@ class weapon
 
     // Now we want to be able to interact with our class by way of a function that we set up. We can call these
     // by using -> functionName()
-    public function weaponInfo()
+    public function askUserForSpecs()
     {
         // We're starting by saying for each thing we listed in the datafields array, make a field variable
         foreach ($this->datafields as $field){
@@ -68,13 +68,13 @@ class arsenal
      * I also need to better understand the declaration here, I think we're saying for this function to operate, the
      * given variable $weapon must be a class object defined by our weapon class or an extension thereof.
      */
-    public function addWeapon(weapon $weapon)
+    public function addExistingWeapon(weapon $weapon)
     {
         $this->weapons[] = $weapon;
     }
 
     // Now lets make a function that lets us build up an arsenal
-    public function buildArsenal()
+    public function buildFromPrompt()
     {
         // This will help track when a user is done building an arsenal
         $finished = false;
@@ -89,12 +89,12 @@ class arsenal
              * tell the program about the weapon. We don't need to echo anything because we did that when we defined the
              * function using each enumerated field as a prompt.
              */
-            $currentWeapon->weaponInfo();
+            $currentWeapon->askUserForSpecs();
             /*
              * Now we're interacting with the arsenal class object, because we're already inside our class definition we
              * can use $this to call a previously defined function in the class we're currently in.
              */
-            $this->addWeapon($currentWeapon);
+            $this->addExistingWeapon($currentWeapon);
 
             // Now it's time to get froggy. We're going to have the user tell US whether to continue looping.
             echo "\nAdd another weapon? y/n\n";
@@ -138,8 +138,8 @@ class arsenal
             if ($answer == "y") {
                 echo "\nWhat is it?\n";
                 $currentWeapon = new blade;
-                $currentWeapon->weaponInfo();
-                $this->addWeapon($currentWeapon);
+                $currentWeapon->askUserForSpecs();
+                $this->addExistingWeapon($currentWeapon);
             }
             // And this loop just aks the user if we need to go through it again.
             echo "\nAnything else?\n";
@@ -154,7 +154,7 @@ class arsenal
 
 
     // I want to review how these next two functions work.
-    public function saveArsenal()
+    public function saveToFile()
     {
         echo "Where do you want to save?\n";
         $destination = readline();
@@ -163,7 +163,7 @@ class arsenal
         file_put_contents($destination, $saveData);
     }
 
-    public static function loadArsenal()
+    public static function loadFromFile()
     {
         $file_location = readline();
         $c = file_get_contents($file_location);
@@ -177,7 +177,7 @@ echo "Let's build your arsenal!\n";
 // Make a new arsenal class object called edc.
 $edc = new arsenal();
 // Have the user build this new arsenal
-$edc->buildArsenal();
+$edc->buildFromPrompt();
 // And now to check our results.
 print_r($edc);
 

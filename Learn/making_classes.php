@@ -8,9 +8,9 @@
 class weapon
 {
     // This is how we'll list things that we care about.
-//    public $platform;
-//    public $chamber;
-//    public $serial;
+    public $platform;
+    public $chamber;
+    public $serial;
     // And an auxiliary item that helps the user interact with our class.
     public $datafields = ["platform", "chamber", "serial", "type"];
     /*
@@ -35,13 +35,16 @@ class weapon
 
 // Now I want to work on making a class extension
 class blade extends weapon
-/*
+{
+ /*
  * It's worth noting that if we want all the same shit we cared about in the general weapons class, we must enumerate
  * them in our $datafields array. That being said, I can use all the same functions that I defined in the weapon class.
  *
  * Here I'm making a class that allows me to use all the same functions we defined but asks for a different set of info.
  */
-{
+    public $type;
+    public $profile;
+    public $length;
     public $datafields = ["type", "profile", "length"];
 }
 
@@ -54,7 +57,7 @@ class arsenal
     /*
      * All we're doing is making a new empty array. This will eventually become our list of weapons in the arsenal.
      *
-     * At this point I need more information on public vs protect things in classes.
+     * At this point I need more information on public, private, and protected class properties..
      */
     protected $weapons = array();
 
@@ -119,6 +122,52 @@ class arsenal
                 }
             }
         }
+
+        // Now to change gears and interact with our object class extension
+        echo "\nDo you have any non-firearm weapons?\n";
+        // We'll start the same way we started above.
+        $finished = false;
+        while ($finished == false) {
+            // Rather than using 2 if statements and a nested while loop, I suspect I can use a switch statement.
+            // First we'll see if the user wants to add any blades by using this while loop and looking for the answer.
+            $answer = readline();
+            if ($answer == "n") {
+                $finished = true;
+            }
+            // If yes, we'll make our blade class object, get its info, and add it to our arsenal class object
+            if ($answer == "y") {
+                echo "\nWhat is it?\n";
+                $currentWeapon = new blade;
+                $currentWeapon->weaponInfo();
+                $this->addWeapon($currentWeapon);
+            }
+            // And this loop just aks the user if we need to go through it again.
+            echo "\nAnything else?\n";
+            while ($answer != "n" and $answer != "y"){
+                echo "\nYou have made a typo. Please answer with y or n.\n";
+                if ($answer == "n") {
+                    $finished = true;
+                }
+            }
+        }
+    }
+
+
+    // I want to review how these next two functions work.
+    public function saveArsenal()
+    {
+        echo "Where do you want to save?\n";
+        $destination = readline();
+
+        $saveData = serialize($this);
+        file_put_contents($destination, $saveData);
+    }
+
+    public static function loadArsenal()
+    {
+        $file_location = readline();
+        $c = file_get_contents($file_location);
+        return unserialize($c);
     }
 }
 
@@ -129,41 +178,10 @@ echo "Let's build your arsenal!\n";
 $edc = new arsenal();
 // Have the user build this new arsenal
 $edc->buildArsenal();
-// Now we're switching gears and interacting with our blade extension of the weapon object class
-echo "\nDo you have any non-firearm weapons?\n";
-/*
- * The buildArsenal function defaults to the weapons object class, which doesn't have the information we need about
- * blades. Because of this we pretty much had to rewrite our buildArsenal function. We could have done this by making a
- * variant of the build arsenal that does the exact same thing but calls the blade class extension of the weapon
- * object class
- */
-$finished = false;
-while ($finished == false) {
-    // First we'll see if the user wants to add any blades by using this while loop and looking for the answer.
-    $answer = readline();
-    if ($answer == "n") {
-        $finished = true;
-    }
-    // If yes, we'll make our blade class object, get its info, and add it to our edc arsenal class object
-    if ($answer == "y") {
-        echo "\nWhat is it?\n";
-        $currentWeapon = new blade;
-        $currentWeapon->weaponInfo();
-        $edc->addWeapon($currentWeapon);
-    }
-    // And this loop just aks the user if we need to go through it again.
-    echo "\nAnything else?\n";
-    while ($answer != "n" and $answer != "y"){
-        echo "\nYou have made a typo. Please answer with y or n.\n";
-        if ($answer == "n") {
-            $finished = true;
-        }
-    }
-}
-// Now that we've completed building the fucker, lets check our results.
+// And now to check our results.
 print_r($edc);
 
 // Now I want to know if calling buildArsenal a second time erases the first build
-echo "\nrepeat\n";
-$edc->buildArsenal();
-print_r($edc);
+//echo "\nrepeat\n";
+//$edc->buildArsenal();
+//print_r($edc);

@@ -1,11 +1,11 @@
 <?php
 
-require_once __DIR__. "/user_input.php";
+require_once __DIR__. "/making_classes.php";
 //
 //$a = new arsenal();
 //$a->build();
 //$a->save_arsenal();
 
-$a = arsenal::load_arsenal();
+$a = arsenal::loadArsenal();
 
 print_r($a);

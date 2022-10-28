@@ -163,23 +163,25 @@ class arsenal
         file_put_contents($destination, $saveData);
     }
 
+    // Use case: $[variable] = arsenal::loadFromFile();
     public static function loadFromFile()
     {
+        echo "Load which file?\n";
         $file_location = readline();
-        $c = file_get_contents($file_location);
-        return unserialize($c);
+        $file = file_get_contents($file_location);
+        return unserialize($file);
     }
 }
 
 // Time to put it all together.
 
-echo "Let's build your arsenal!\n";
-// Make a new arsenal class object called edc.
-$edc = new arsenal();
-// Have the user build this new arsenal
-$edc->buildFromPrompt();
-// And now to check our results.
-print_r($edc);
+//echo "Let's build your arsenal!\n";
+//// Make a new arsenal class object called edc.
+//$edc = new arsenal();
+//// Have the user build this new arsenal
+//$edc->buildFromPrompt();
+//// And now to check our results.
+//print_r($edc);
 
 // Now I want to know if calling buildArsenal a second time erases the first build
 //echo "\nrepeat\n";
